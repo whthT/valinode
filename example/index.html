@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Bubba</title>
+    <title>Valinode</title>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
@@ -19,10 +19,10 @@ $(function() {
    let  tarih1 = $("input[name=tarih1]"),
         tarih2 = $("input[name=tarih2]");
    
-   $bubba = new Bubba();
+   $valinode = new Valinode();
     
    $.validate = function() {
-        let validate = $bubba.requests({
+        let validate = $valinode.requests({
             tarih1: tarih1.val(),
             tarih2: tarih2.val()
         }).validate();
@@ -30,7 +30,7 @@ $(function() {
         console.log(validate.all());
     };
 
-    $bubba.rules({
+    $valinode.rules({
         tarih1: "required|integer|max:2018-09-27",
         tarih2: "required|date|bigger_than:tarih1|between:2018-09-27,2018-09-29"
     })

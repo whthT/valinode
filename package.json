@@ -1,28 +1,28 @@
 {
-  "name": "bubba",
+  "name": "valinode",
   "version": "1.0.0",
   "description": "A package for javascript form validation.",
   "main": "./index.js",
   "scripts": {
     "test": "jest",
-    "compile": "npx babel index.js --out-file dist/bubba.js",
+    "compile": "npx babel index.js --out-file dist/valinode.js",
     "build": "babel src -d dist --presets minify",
-    "watch": "npm run build ",
+    "watch": "babel src -d dist --presets minify --watch",
     "all": "npm run compile && npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/whthT/bubba.git"
+    "url": "git+https://github.com/whthT/valinode.git"
   },
   "keywords": ["javascript form validation"],
   "author": {
-    "name": "Musa Kurt",
+    "name": "whtht",
     "email": "hackedtim61@gmail.com",
-    "url": "https://whtht.github.io/bubba/"
+    "url": "https://whtht.github.io/valinode/"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/whthT/bubba/issues"
+    "url": "https://github.com/whthT/valinode/issues"
   },
   "devDependencies": {
     "@babel/cli": "^7.0.0-beta.44",
@@ -35,7 +35,7 @@
     "cross-env": "^5.2.0",
     "eslint": "^5.6.0",
     "eslint-loader": "^2.1.0",
-    "jest": "^23.6.0",
+    "jest": "^23.6.0"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"

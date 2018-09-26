@@ -1,3 +1,3 @@
-import Bubba from "./src/index";
+import Valinode from "./dist/index";
 
-export default Bubba;
+export default Valinode;

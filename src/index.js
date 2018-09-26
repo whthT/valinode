@@ -4,7 +4,7 @@ Array.prototype.diff = function (a) {
     });
 };
 
-export default class Bubba {
+export default class Valinode {
     constructor(args = {}) {
 
         this.isDebug = args.debug || false;
