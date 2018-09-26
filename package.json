@@ -1,6 +1,6 @@
 {
   "name": "valinode",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A package for javascript form validation.",
   "main": "./index.js",
   "scripts": {
@@ -14,7 +14,9 @@
     "type": "git",
     "url": "git+https://github.com/whthT/valinode.git"
   },
-  "keywords": ["javascript form validation"],
+  "keywords": [
+    "javascript form validation"
+  ],
   "author": {
     "name": "whtht",
     "email": "hackedtim61@gmail.com",
