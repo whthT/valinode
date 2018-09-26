@@ -1,12 +1,12 @@
 {
   "name": "bubba",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "A package for javascript form validation.",
+  "main": "./index.js",
   "scripts": {
     "test": "jest",
-    "compile": "npx babel src/index.js --out-file dist/bubba.js",
-    "build": "babel src -d dist --presets minify --watch",
+    "compile": "npx babel index.js --out-file dist/bubba.js",
+    "build": "babel src -d dist --presets minify",
     "watch": "npm run build ",
     "all": "npm run compile && npm run build"
   },
@@ -14,9 +14,13 @@
     "type": "git",
     "url": "git+https://github.com/whthT/bubba.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["javascript form validation"],
+  "author": {
+    "name": "Musa Kurt",
+    "email": "hackedtim61@gmail.com",
+    "url": "https://whtht.github.io/bubba/"
+  },
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/whthT/bubba/issues"
   },
@@ -32,13 +36,10 @@
     "eslint": "^5.6.0",
     "eslint-loader": "^2.1.0",
     "jest": "^23.6.0",
-    "webpack": "^4.19.1",
-    "webpack-cli": "^3.1.0"
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
   },
-  "homepage": "https://github.com/whthT/bubba#readme",
   "babel": {
     "presets": [
       [

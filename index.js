@@ -1,2 +1,3 @@
-import LaravelValidation from "./src/index";
+import Bubba from "./src/index";
 
+export default Bubba;
