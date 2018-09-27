@@ -74,7 +74,8 @@ export default class Valinode {
                     typeOf == "numeric" && parseInt(requestValue) ||
                     typeOf == "array" && requestValue.length ||
                     typeOf == "date" && (new Date(requestValue)).getTime() ? true : false;
-                return {
+
+                let requestObj = {
                     property: v,
                     typeOf,
                     cond: splitRules.map(v => {
@@ -88,24 +89,26 @@ export default class Valinode {
                     value: this.$requests[v],
                     isValueExists
                 };
-            }).forEach(v => {
-                if (typeof this.$ExceptionContainer.errors[v.property] == "undefined") {
-                    this.$ExceptionContainer.errors[v.property] = [];
+
+                if (typeof this.$ExceptionContainer.errors[requestObj.property] == "undefined") {
+                    this.$ExceptionContainer.errors[requestObj.property] = [];
                 }
-                v.cond.forEach(_v => {
+                requestObj.cond.forEach(_v => {
                     if (typeof this[_v._fn] != "undefined") {
-                        let exception = this[_v._fn](v, _v);
+                        let exception = this[_v._fn](requestObj, _v);
                         if (exception) {
                             if (!this._isFailed) {
                                 this._isFailed = true;
                             }
                             this._errorCount++;
-                            this.$ExceptionContainer.errors[v.property].push(exception);
+                            this.$ExceptionContainer.errors[requestObj.property].push(exception);
                         }
                     } else {
                         console.warn(_v._fn + " is not a valid validation rule!");
                     }
                 });
+
+
             });
             resolve(this.$ExceptionContainer);
         });
@@ -159,7 +162,7 @@ export default class Valinode {
     }
 
     required(request, rule) {
-        if (!request.isValueExists) {
+        if (!request.isValueExists && !this.isNullable(request)) {
             return this.createNewExceptionMessage(request, rule);
         }
     }
@@ -181,9 +184,8 @@ export default class Valinode {
             return this.createNewExceptionMessage(request, rule);
         }
     }
-
     date(request, rule) {
-        if(request.typeOf != "date") {
+        if (request.typeOf != "date") {
             return this.createNewExceptionMessage(request, rule);
         }
     }
@@ -201,25 +203,26 @@ export default class Valinode {
     }
 
     min(request, rule) {
-            if (
-                request.typeOf == "numeric" && parseInt(request.value) < parseInt(rule.value) ||
-                request.typeOf == "string" && String(request.value).length < parseInt(rule.value) ||
-                request.typeOf == "array" && request.value.length < parseInt(rule.value) ||
-                request.typeOf == "date" && (new Date(request.value)).getTime() < (new Date(rule.value)).getTime()
+        if (
+            request.typeOf == "numeric" && parseInt(request.value) < parseInt(rule.value) ||
+            request.typeOf == "string" && String(request.value).length < parseInt(rule.value) ||
+            request.typeOf == "array" && request.value.length < parseInt(rule.value) ||
+            request.typeOf == "date" && (new Date(request.value)).getTime() < (new Date(rule.value)).getTime()
+        ) {
+            return this.createNewExceptionMessage(request, rule);
+        }
+    }
+
+    in (request, rule) {
+        if ( //TODO: Date formatına göre iki tarih arasında in kuralı geçerli olması için çalışılacaktır.
+            (
+                request.typeOf == "array" ?
+                request.value : [request.typeOf == "numeric" ?
+                parseInt(request.value) : request.value]).diff(JSON.parse(rule.value)).length
             ) {
                 return this.createNewExceptionMessage(request, rule);
             }
-        }
-
-        in (request, rule) {
-            if ( //TODO: Date formatına göre iki tarih arasında in kuralı geçerli olması için çalışılacaktır.
-                (
-                    request.typeOf == "array" ?
-                    request.value : [request.typeOf == "numeric" ?
-                parseInt(request.value) : request.value]).diff(JSON.parse(rule.value)).length) {
-                return this.createNewExceptionMessage(request, rule);
-            }
-        }
+    }
 
     bigger_than(request, rule) {
         if (typeof this.$requests[rule.value] != "undefined") {
@@ -287,6 +290,18 @@ export default class Valinode {
         }
     }
 
+    nullable(_request, _rule) {
+        // is't here for keep works!
+    }
+
+    isRuleExists(rules, rule) {
+        return rules.cond.filter(v => v._fn == rule).length ? true : false;
+    }
+
+    isNullable(request) {
+        return this.isRuleExists(request, "nullable");
+    }
+
     createNewExceptionMessage(request, rule, other = null) {
         this.failedRules.push({
             request,
@@ -347,6 +362,7 @@ export default class Valinode {
     isString(x) {
         return Object.prototype.toString.call(x) === "[object String]"
     }
+
     isDate(x) {
         return Object.prototype.toString.call(x) === "[object Date]" && x != "Invalid Date"
     }

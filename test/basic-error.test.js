@@ -303,7 +303,6 @@ test("Between:string", function() {
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
     bubba = bubba.requests({test: "bu bir denemedir." /* 17 characters */}).validate();
-    console.log(bubba.all());
     expect(bubba.errorCount()).toBe(0);
 });
 
@@ -374,5 +373,20 @@ test("Email", function() {
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
     bubba = bubba.requests({test: "test@test.com"}).validate();
+    expect(bubba.errorCount()).toBe(0);
+});
+
+
+test("Nullable:required", function() {
+    let bubba = new Bubba()
+        .rules({test: "required"})
+        .validate();
+    expect(bubba.get("test").length).toBe(1);
+
+    expect(bubba.isFailedRule("required")).toBeInstanceOf(Object);
+    expect(bubba.get("test")).toBeInstanceOf(Array);
+
+    bubba = bubba.requests({test: ""}).rules({test: "nullable|required"}).validate();
+    console.log(bubba.all())
     expect(bubba.errorCount()).toBe(0);
 });
