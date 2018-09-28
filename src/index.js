@@ -93,18 +93,21 @@ export default class Valinode {
                 if (typeof this.$ExceptionContainer.errors[requestObj.property] == "undefined") {
                     this.$ExceptionContainer.errors[requestObj.property] = [];
                 }
-                requestObj.cond.forEach(_v => {
-                    if (typeof this[_v._fn] != "undefined") {
-                        let exception = this[_v._fn](requestObj, _v);
-                        if (exception) {
-                            if (!this._isFailed) {
-                                this._isFailed = true;
+                requestObj.cond.forEach((_v) => {
+                    let nullable = this.isNullable(requestObj);
+                    if (!nullable || nullable && requestObj.isValueExists) {
+                        if (typeof this[_v._fn] != "undefined") {
+                            let exception = this[_v._fn](requestObj, _v);
+                            if (exception) {
+                                if (!this._isFailed) {
+                                    this._isFailed = true;
+                                }
+                                this._errorCount++;
+                                this.$ExceptionContainer.errors[requestObj.property].push(exception);
                             }
-                            this._errorCount++;
-                            this.$ExceptionContainer.errors[requestObj.property].push(exception);
+                        } else {
+                            console.warn(_v._fn + " is not a valid validation rule!");
                         }
-                    } else {
-                        console.warn(_v._fn + " is not a valid validation rule!");
                     }
                 });
 
@@ -203,26 +206,26 @@ export default class Valinode {
     }
 
     min(request, rule) {
-        if (
-            request.typeOf == "numeric" && parseInt(request.value) < parseInt(rule.value) ||
-            request.typeOf == "string" && String(request.value).length < parseInt(rule.value) ||
-            request.typeOf == "array" && request.value.length < parseInt(rule.value) ||
-            request.typeOf == "date" && (new Date(request.value)).getTime() < (new Date(rule.value)).getTime()
-        ) {
-            return this.createNewExceptionMessage(request, rule);
+            if (
+                request.typeOf == "numeric" && parseInt(request.value) < parseInt(rule.value) ||
+                request.typeOf == "string" && String(request.value).length < parseInt(rule.value) ||
+                request.typeOf == "array" && request.value.length < parseInt(rule.value) ||
+                request.typeOf == "date" && (new Date(request.value)).getTime() < (new Date(rule.value)).getTime()
+            ) {
+                return this.createNewExceptionMessage(request, rule);
+            }
         }
-    }
 
-    in (request, rule) {
-        if ( //TODO: Date formatına göre iki tarih arasında in kuralı geçerli olması için çalışılacaktır.
-            (
-                request.typeOf == "array" ?
-                request.value : [request.typeOf == "numeric" ?
+        in (request, rule) {
+            if ( //TODO: Date formatına göre iki tarih arasında in kuralı geçerli olması için çalışılacaktır.
+                (
+                    request.typeOf == "array" ?
+                    request.value : [request.typeOf == "numeric" ?
                 parseInt(request.value) : request.value]).diff(JSON.parse(rule.value)).length
             ) {
                 return this.createNewExceptionMessage(request, rule);
             }
-    }
+        }
 
     bigger_than(request, rule) {
         if (typeof this.$requests[rule.value] != "undefined") {
@@ -304,8 +307,8 @@ export default class Valinode {
 
     createNewExceptionMessage(request, rule, other = null) {
         this.failedRules.push({
-            request,
-            rule,
+            property: request.property,
+            rule: rule._fn,
             expect: rule.value,
             found: request.value
         });
@@ -351,8 +354,8 @@ export default class Valinode {
             this.$requests[property] : null;
     }
 
-    parseBaseProperty(propert) {
-        return propert.replace(/[_-]/g, ' ')
+    parseBaseProperty(property) {
+        return property.replace(/[_-]/g, ' ')
     }
 
     isInteger(x) {
@@ -442,8 +445,10 @@ export default class Valinode {
         return this._isValidated;
     }
 
-    errorCount() {
-        return this._errorCount
+    errorCount(property = null) {
+        return property ?
+            this.all(property).length :
+            this._errorCount
     }
 
     clear() {
@@ -454,9 +459,9 @@ export default class Valinode {
         return this;
     }
 
-    isFailedRule(rule) {
-        let match = this.failedRules.filter(v => v.rule._fn == rule);
-        return match.length ? match.shift() : false
+    isFailedRule(rule, property) {
+        let match = this.failedRules.filter(v => v.rule == rule && v.property == property);
+        return match.length ? match.shift() : null
     }
 
     validate() {

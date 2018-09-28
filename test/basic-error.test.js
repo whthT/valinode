@@ -1,392 +1,644 @@
 import Bubba from "../src";
 
-test("Required", function() {
+test("Required", function () {
     let bubba = new Bubba()
-        .rules({test: "required"})
-        .requests({test: ""}).validate();
+        .rules({
+            test: "required"
+        })
+        .requests({
+            test: ""
+        })
+        .validate();
 
     expect(bubba.get("test").length).toBe(1);
     expect(bubba.get("test")).toBeInstanceOf(Array);
-    expect(bubba.isFailedRule("required")).toBeInstanceOf(Object);
-    bubba = bubba.requests({test: "12"}).validate();
+    expect(bubba.isFailedRule("required", "test")).toBeInstanceOf(Object);
+
+    bubba = bubba.requests({
+        test: "12"
+    }).validate();
 
     expect(bubba.get("test").length).toBe(0);
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Integer", function() {
+test("Integer", function () {
     let bubba = new Bubba()
-        .rules({test: "integer"})
-        .requests({test: "string value"}).validate();
+        .rules({
+            test: "integer"
+        })
+        .requests({
+            test: "string value"
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("integer")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("integer", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: 12}).validate();
+    bubba = bubba.requests({
+        test: 12
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
 
-test("String", function() {
+test("String", function () {
     let bubba = new Bubba()
-        .rules({test: "string"})
-        .requests({test: 12}).validate();
+        .rules({
+            test: "string"
+        })
+        .requests({
+            test: 12
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("string")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("string", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "string"}).validate();
+    bubba = bubba.requests({
+        test: "string"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Array", function() {
+test("Array", function () {
     let bubba = new Bubba()
-        .rules({test: "array"})
-        .requests({test: 12}).validate();
+        .rules({
+            test: "array"
+        })
+        .requests({
+            test: 12
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("array")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("array", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: []}).validate();
+    bubba = bubba.requests({
+        test: []
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Date", function() {
+test("Date", function () {
     let bubba = new Bubba()
-        .rules({test: "date"})
-        .requests({test: "string value"}).validate();
+        .rules({
+            test: "date"
+        })
+        .requests({
+            test: "string value"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("date")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("date", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "2018-09-26"}).validate();
+    bubba = bubba.requests({
+        test: "2018-09-26"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Max:string", function() {
+test("Max:string", function () {
     let bubba = new Bubba()
-        .rules({test: "max:5"})
-        .requests({test: "bu bir denemedir."}).validate();
+        .rules({
+            test: "max:5"
+        })
+        .requests({
+            test: "bu bir denemedir."
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("max")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("max", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "bu bi"}).validate();
+    bubba = bubba.requests({
+        test: "bu bi"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Max:integer", function() {
+test("Max:integer", function () {
     let bubba = new Bubba()
-        .rules({test: "max:5"})
-        .requests({test: "6"}).validate();
+        .rules({
+            test: "max:5"
+        })
+        .requests({
+            test: "6"
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("max")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("max", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: 5}).validate();
+    bubba = bubba.requests({
+        test: 5
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Max:array", function() {
+test("Max:array", function () {
     let bubba = new Bubba()
-        .rules({test: "max:2"})
-        .requests({test: [1,2,3]}).validate();
+        .rules({
+            test: "max:2"
+        })
+        .requests({
+            test: [1, 2, 3]
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("max")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("max", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: [1,2]}).validate();
+    bubba = bubba.requests({
+        test: [1, 2]
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Max:date", function() {
+test("Max:date", function () {
     let bubba = new Bubba()
-        .rules({test: "max:2018-09-26"})
-        .requests({test: "2018-09-27"}).validate();
+        .rules({
+            test: "max:2018-09-26"
+        })
+        .requests({
+            test: "2018-09-27"
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("max")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("max", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "2018-09-26"}).validate();
+    bubba = bubba.requests({
+        test: "2018-09-26"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
 
-test("Min:string", function() {
+test("Min:string", function () {
     let bubba = new Bubba()
-        .rules({test: "min:5"})
-        .requests({test: "bu"}).validate();
+        .rules({
+            test: "min:5"
+        })
+        .requests({
+            test: "bu"
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("min")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("min", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "bu bir denemedir."}).validate();
+    bubba = bubba.requests({
+        test: "bu bir denemedir."
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Min:integer", function() {
+test("Min:integer", function () {
     let bubba = new Bubba()
-        .rules({test: "min:5"})
-        .requests({test: "2"}).validate();
+        .rules({
+            test: "min:5"
+        })
+        .requests({
+            test: "2"
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("min")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("min", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: 5}).validate();
+    bubba = bubba.requests({
+        test: 5
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Min:array", function() {
+test("Min:array", function () {
     let bubba = new Bubba()
-        .rules({test: "min:2"})
-        .requests({test: [1]}).validate();
+        .rules({
+            test: "min:2"
+        })
+        .requests({
+            test: [1]
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("min")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("min", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: [1,2]}).validate();
+    bubba = bubba.requests({
+        test: [1, 2]
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Min:date", function() {
+test("Min:date", function () {
     let bubba = new Bubba()
-        .rules({test: "min:2018-09-26"})
-        .requests({test: "2018-09-25"}).validate();
+        .rules({
+            test: "min:2018-09-26"
+        })
+        .requests({
+            test: "2018-09-25"
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("min")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("min", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "2018-09-26"}).validate();
+    bubba = bubba.requests({
+        test: "2018-09-26"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("In:array", function() {
+test("In:array", function () {
     let bubba = new Bubba()
-        .rules({test: "in:[1,2]"})
-        .requests({test: [3]}).validate();
+        .rules({
+            test: "in:[1,2]"
+        })
+        .requests({
+            test: [3]
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("in")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("in", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: [1]}).validate();
+    bubba = bubba.requests({
+        test: [1]
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("In:integer", function() {
+test("In:integer", function () {
     let bubba = new Bubba()
-        .rules({test: "in:[1,2]"})
-        .requests({test: 3}).validate();
+        .rules({
+            test: "in:[1,2]"
+        })
+        .requests({
+            test: 3
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("in")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("in", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: 2}).validate();
+    bubba = bubba.requests({
+        test: 2
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("In:string", function() {
+test("In:string", function () {
     // not a valid validation
     expect(true).toBe(true)
 });
 
-test("Bigger than:integer", function() {
+test("Bigger than:integer", function () {
     let bubba = new Bubba()
-        .rules({test: "bigger_than:test2"})
-        .requests({test: 4, test2: 5}).validate();
+        .rules({
+            test: "bigger_than:test2"
+        })
+        .requests({
+            test: 4,
+            test2: 5
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("bigger_than")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: 5, test2: 4}).validate();
+    bubba = bubba.requests({
+        test: 5,
+        test2: 4
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Bigger than:string", function() {
+test("Bigger than:string", function () {
     let bubba = new Bubba()
-        .rules({test: "bigger_than:test2"})
-        .requests({test: "a", test2: "b"}).validate();
+        .rules({
+            test: "bigger_than:test2"
+        })
+        .requests({
+            test: "a",
+            test2: "b"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("bigger_than")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "b", test2: "a"}).validate();
+    bubba = bubba.requests({
+        test: "b",
+        test2: "a"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Bigger than:date", function() {
+test("Bigger than:date", function () {
     let bubba = new Bubba()
-        .rules({test: "bigger_than:test2"})
-        .requests({test: "2018-09-26", test2: "2018-09-27"}).validate();
+        .rules({
+            test: "bigger_than:test2"
+        })
+        .requests({
+            test: "2018-09-26",
+            test2: "2018-09-27"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("bigger_than")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "2018-09-27", test2: "2018-09-26"}).validate();
+    bubba = bubba.requests({
+        test: "2018-09-27",
+        test2: "2018-09-26"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Smaller than:integer", function() {
+test("Smaller than:integer", function () {
     let bubba = new Bubba()
-        .rules({test: "smaller_than:test2"})
-        .requests({test: 5, test2: 4}).validate();
+        .rules({
+            test: "smaller_than:test2"
+        })
+        .requests({
+            test: 5,
+            test2: 4
+        }).validate();
 
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("smaller_than")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: 4, test2: 5}).validate();
+    bubba = bubba.requests({
+        test: 4,
+        test2: 5
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Smaller than:string", function() {
+test("Smaller than:string", function () {
     let bubba = new Bubba()
-        .rules({test: "smaller_than:test2"})
-        .requests({test: "b", test2: "a"}).validate();
+        .rules({
+            test: "smaller_than:test2"
+        })
+        .requests({
+            test: "b",
+            test2: "a"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("smaller_than")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "a", test2: "b"}).validate();
+    bubba = bubba.requests({
+        test: "a",
+        test2: "b"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Smaller than:date", function() {
+test("Smaller than:date", function () {
     let bubba = new Bubba()
-        .rules({test: "smaller_than:test2"})
-        .requests({test: "2018-09-27", test2: "2018-09-26"}).validate();
+        .rules({
+            test: "smaller_than:test2"
+        })
+        .requests({
+            test: "2018-09-27",
+            test2: "2018-09-26"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("smaller_than")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "2018-09-26", test2: "2018-09-27"}).validate();
+    bubba = bubba.requests({
+        test: "2018-09-26",
+        test2: "2018-09-27"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Between:integer", function() {
+test("Between:integer", function () {
     let bubba = new Bubba()
-        .rules({test: "between:4,5"})
-        .requests({test: "2"}).validate();
+        .rules({
+            test: "between:4,5"
+        })
+        .requests({
+            test: "2"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("between")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("between", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "4"}).validate();
+    bubba = bubba.requests({
+        test: "4"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Between:string", function() {
+test("Between:string", function () {
     let bubba = new Bubba()
-        .rules({test: "between:10,20"})
-        .requests({test: "bu bir de" /* 9 characters */}).validate();
-       
+        .rules({
+            test: "between:10,20"
+        })
+        .requests({
+            test: "bu bir de" /* 9 characters */
+        }).validate();
+
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("between")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("between", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "bu bir deneme içeriktir.." /* 25 characters */}).validate();
+    bubba = bubba.requests({
+        test: "bu bir deneme içeriktir.." /* 25 characters */
+    }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("between")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("between", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "bu bir denemedir." /* 17 characters */}).validate();
+    bubba = bubba.requests({
+        test: "bu bir denemedir." /* 17 characters */
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Between:date", function() {
+test("Between:date", function () {
     let bubba = new Bubba()
-        .rules({test: "between:2018-09-27,2018-09-29"})
-        .requests({test: "2018-09-25"}).validate();
+        .rules({
+            test: "between:2018-09-27,2018-09-29"
+        })
+        .requests({
+            test: "2018-09-25"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("between")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("between", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "2018-09-27"}).validate();
+    bubba = bubba.requests({
+        test: "2018-09-27"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Same", function() {
+test("Same", function () {
     let bubba = new Bubba()
-        .rules({test: "same:test2"})
-        .requests({test: "2018-09-25", test2: "2018-09-26"}).validate();
+        .rules({
+            test: "same:test2"
+        })
+        .requests({
+            test: "2018-09-25",
+            test2: "2018-09-26"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("same")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("same", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: 12, test2: "12"}).validate();
+    bubba = bubba.requests({
+        test: 12,
+        test2: "12"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Hard Same", function() {
+test("Hard Same", function () {
     let bubba = new Bubba()
-        .rules({test: "hard_same:test2"})
-        .requests({test: "2018-09-25", test2: "2018-09-26"}).validate();
+        .rules({
+            test: "hard_same:test2"
+        })
+        .requests({
+            test: "2018-09-25",
+            test2: "2018-09-26"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("hard_same")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("hard_same", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: 12, test2: "12"}).validate();
+    bubba = bubba.requests({
+        test: 12,
+        test2: "12"
+    }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("hard_same")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("hard_same", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: 12, test2: 12}).validate();
+    bubba = bubba.requests({
+        test: 12,
+        test2: 12
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 
-    bubba = bubba.requests({test: "12", test2: "12"}).validate();
+    bubba = bubba.requests({
+        test: "12",
+        test2: "12"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Phone", function() {
+test("Phone", function () {
     let bubba = new Bubba()
-        .rules({test: "phone"})
-        .requests({test: "2018-09-25"}).validate();
+        .rules({
+            test: "phone"
+        })
+        .requests({
+            test: "2018-09-25"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("phone")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("phone", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "+442071838750"}).validate();
+    bubba = bubba.requests({
+        test: "+442071838750"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
-    bubba = bubba.requests({test: "+905555555555"}).validate();
+    bubba = bubba.requests({
+        test: "+905555555555"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
-test("Email", function() {
+test("Email", function () {
     let bubba = new Bubba()
-        .rules({test: "email"})
-        .requests({test: "test@test"}).validate();
+        .rules({
+            test: "email"
+        })
+        .requests({
+            test: "test@test"
+        }).validate();
     expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("email")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("email", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: "test@test.com"}).validate();
+    bubba = bubba.requests({
+        test: "test@test.com"
+    }).validate();
     expect(bubba.errorCount()).toBe(0);
 });
 
 
-test("Nullable:required", function() {
+test("Nullable:required", function () {
     let bubba = new Bubba()
-        .rules({test: "required"})
+        .rules({
+            test: "required"
+        })
+        .requests({
+            test: ""
+        })
         .validate();
+
     expect(bubba.get("test").length).toBe(1);
 
-    expect(bubba.isFailedRule("required")).toBeInstanceOf(Object);
+    expect(bubba.isFailedRule("required", "test")).toBeInstanceOf(Object);
     expect(bubba.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({test: ""}).rules({test: "nullable|required"}).validate();
-    console.log(bubba.all())
+    bubba = bubba.requests({
+        test: "wwww"
+    }).rules({
+        test: "nullable|required"
+    }).validate();
+    expect(bubba.errorCount()).toBe(0);
+
+    bubba = bubba.requests({
+        test: ""
+    }).rules({
+        test: "required|nullable"
+    }).validate();
+    expect(bubba.errorCount()).toBe(0);
+    expect(bubba.errorCount("test")).toBe(0);
+});
+
+test("Nullable:min", function () {
+    let bubba = new Bubba()
+        .requests({
+            test: "5"
+        }).rules({
+            test: "min:6"
+        }).validate();
+
+    expect(bubba.errorCount()).toBe(1);
+    expect(bubba.isFailedRule("min", "test")).toBeInstanceOf(Object);
+
+    bubba = bubba.requests({
+        test: ""
+    }).rules({
+        test: "nullable|min:6"
+    }).validate();
+
     expect(bubba.errorCount()).toBe(0);
 });
+
+test("Nullable:max", function () {
+    let bubba = new Bubba()
+        .requests({
+            test: "5"
+        }).rules({
+            test: "max:4"
+        }).validate();
+    expect(bubba.errorCount()).toBe(1);
+    expect(bubba.isFailedRule("max", "test")).toBeInstanceOf(Object);
+
+    bubba = bubba.requests({
+        test: ""
+    }).rules({
+        test: "nullable|max:6"
+    }).validate();
+
+    expect(bubba.errorCount()).toBe(0);
+})
