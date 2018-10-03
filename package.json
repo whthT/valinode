@@ -1,62 +1,64 @@
 {
-  "name": "valinode",
-  "version": "1.0.3",
-  "description": "A package for javascript form validation.",
-  "main": "./index.js",
-  "scripts": {
-    "test": "jest",
-    "compile": "npx babel index.js --out-file dist/valinode.js",
-    "build": "babel src -d dist --presets minify",
-    "watch": "babel src -d dist --presets minify --watch",
-    "all": "npm run compile && npm run build"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/whthT/valinode.git"
-  },
-  "keywords": [
-    "javascript form validation"
-  ],
-  "author": {
-    "name": "whtht",
-    "email": "hackedtim61@gmail.com",
-    "url": "https://whtht.github.io/valinode/"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/whthT/valinode/issues"
-  },
-  "devDependencies": {
-    "@babel/cli": "^7.0.0-beta.44",
-    "@babel/core": "^7.0.0-0",
-    "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.41",
-    "@babel/preset-env": "^7.0.0-beta.44",
-    "babel-core": "^7.0.0-0",
-    "babel-loader": "^8.0.2",
-    "babel-preset-minify": "^0.4.3",
-    "cross-env": "^5.2.0",
-    "eslint": "^5.6.0",
-    "eslint-loader": "^2.1.0",
-    "jest": "^23.6.0"
-  },
-  "resolutions": {
-    "babel-core": "7.0.0-bridge.0"
-  },
-  "babel": {
-    "presets": [
-      [
-        "@babel/preset-env",
-        {
-          "modules": "commonjs",
-          "targets": {
-            "node": "current"
-          }
-        }
-      ]
+    "name": "valinode",
+    "version": "1.0.3",
+    "description": "A package for javascript form validation.",
+    "main": "./index.js",
+    "scripts": {
+        "test": "jest",
+        "compile": "npx babel index.js --out-file dist/valinode.js",
+        "build": "babel src -d dist --presets minify",
+        "watch": "babel src -d dist --presets minify --watch",
+        "all": "npm run compile && npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/whthT/valinode.git"
+    },
+    "keywords": [
+        "javascript form validation"
     ],
-    "plugins": [
-      "@babel/plugin-proposal-object-rest-spread"
-    ]
-  },
-  "dependencies": {}
+    "author": {
+        "name": "whtht",
+        "email": "hackedtim61@gmail.com",
+        "url": "https://whtht.github.io/valinode/"
+    },
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/whthT/valinode/issues"
+    },
+    "devDependencies": {
+        "@babel/cli": "^7.0.0-beta.44",
+        "@babel/core": "^7.0.0-0",
+        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.41",
+        "@babel/preset-env": "^7.0.0-beta.44",
+        "babel-core": "^7.0.0-0",
+        "babel-loader": "^8.0.2",
+        "babel-preset-minify": "^0.4.3",
+        "cross-env": "^5.2.0",
+        "eslint": "^5.6.0",
+        "eslint-loader": "^2.1.0",
+        "jest": "^23.6.0"
+    },
+    "resolutions": {
+        "babel-core": "7.0.0-bridge.0"
+    },
+    "babel": {
+        "presets": [
+            [
+                "@babel/preset-env",
+                {
+                    "modules": "commonjs",
+                    "targets": {
+                        "node": "current"
+                    }
+                }
+            ]
+        ],
+        "plugins": [
+            "@babel/plugin-proposal-object-rest-spread"
+        ]
+    },
+    "dependencies": {
+        "is-nan": "^1.2.1"
+    }
 }

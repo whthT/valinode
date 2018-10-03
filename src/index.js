@@ -1,3 +1,5 @@
+Number.isNaN = require('is-nan');
+
 Array.prototype.diff = function (a) {
     return this.filter(function (i) {
         return a.indexOf(i) < 0;
@@ -67,51 +69,52 @@ export default class Valinode {
         this._errorCount = 0;
         return new Promise((resolve) => {
             Object.keys(this.$rules).map(v => {
-                let splitRules = this.$rules[v].split('|'),
-                    requestValue = this.$requests[v],
-                    typeOf = this.getTypeOf(requestValue),
-                    isValueExists = typeOf == "string" && String(requestValue).length ||
-                    typeOf == "numeric" && parseInt(requestValue) ||
-                    typeOf == "array" && requestValue.length ||
-                    typeOf == "date" && (new Date(requestValue)).getTime() ? true : false;
-
-                let requestObj = {
-                    property: v,
-                    typeOf,
-                    cond: splitRules.map(v => {
-                        let split = v.split(':');
-                        return {
-                            _fn: split.shift(),
-                            withEqual: split.length > 1 ? true : false,
-                            value: split.pop() || true
-                        }
-                    }),
-                    value: this.$requests[v],
-                    isValueExists
-                };
-
-                if (typeof this.$ExceptionContainer.errors[requestObj.property] == "undefined") {
-                    this.$ExceptionContainer.errors[requestObj.property] = [];
-                }
-                requestObj.cond.forEach((_v) => {
-                    let nullable = this.isNullable(requestObj);
-                    if (!nullable || nullable && requestObj.isValueExists) {
-                        if (typeof this[_v._fn] != "undefined") {
-                            let exception = this[_v._fn](requestObj, _v);
-                            if (exception) {
-                                if (!this._isFailed) {
-                                    this._isFailed = true;
-                                }
-                                this._errorCount++;
-                                this.$ExceptionContainer.errors[requestObj.property].push(exception);
+                let rules = this.$rules[v];
+                if (rules) {
+                    let splitRules = this.$rules[v].split('|'),
+                        requestValue = this.$requests[v],
+                        typeOf = this.getTypeOf(requestValue),
+                        isValueExists = (typeOf == "string" && String(requestValue).length) ||
+                        (typeOf == "numeric" && parseInt(requestValue)) ||
+                        (typeOf == "array" && requestValue.length > 0) ||
+                        (typeOf == "date" && (new Date(requestValue)).getTime()) ?
+                        true :
+                        false;
+                    let requestObj = {
+                        property: v,
+                        typeOf,
+                        cond: splitRules.map(v => {
+                            let split = v.split(':');
+                            return {
+                                _fn: split.shift(),
+                                withEqual: split.length > 1 ? true : false,
+                                value: split.pop() || true
                             }
-                        } else {
-                            console.warn(_v._fn + " is not a valid validation rule!");
-                        }
+                        }),
+                        value: this.$requests[v],
+                        isValueExists
+                    };
+                    if (typeof this.$ExceptionContainer.errors[requestObj.property] == "undefined") {
+                        this.$ExceptionContainer.errors[requestObj.property] = [];
                     }
-                });
-
-
+                    requestObj.cond.forEach((_v) => {
+                        let nullable = this.isNullable(requestObj);
+                        if (!nullable || nullable && requestObj.isValueExists) {
+                            if (typeof this[_v._fn] != "undefined") {
+                                let exception = this[_v._fn](requestObj, _v);
+                                if (exception) {
+                                    if (!this._isFailed) {
+                                        this._isFailed = true;
+                                    }
+                                    this._errorCount++;
+                                    this.$ExceptionContainer.errors[requestObj.property].push(exception);
+                                }
+                            } else {
+                                console.warn(_v._fn + " is not a valid validation rule!");
+                            }
+                        }
+                    });
+                }
             });
             resolve(this.$ExceptionContainer);
         });
@@ -359,7 +362,7 @@ export default class Valinode {
     }
 
     isInteger(x) {
-        return String(parseInt(x)).length == String(x).length && Object.prototype.toString.call(parseInt(x)) === "[object Number]"
+        return (String(parseInt(x)).length == String(x).length && !Number.isNaN(parseInt(x))) && Object.prototype.toString.call(parseInt(x)) === "[object Number]"
     }
 
     isString(x) {

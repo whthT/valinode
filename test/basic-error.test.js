@@ -1,7 +1,7 @@
-import Bubba from "../src";
+import Valinode from "../src";
 
 test("Required", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "required"
         })
@@ -10,20 +10,27 @@ test("Required", function () {
         })
         .validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
-    expect(bubba.isFailedRule("required", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.isFailedRule("required", "test")).toBeInstanceOf(Object);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "12"
     }).validate();
+    expect(valinode.errorCount()).toBe(0);
 
-    expect(bubba.get("test").length).toBe(0);
-    expect(bubba.errorCount()).toBe(0);
+    valinode = valinode.requests({
+            test: "tes"
+        })
+        .rules({
+            test: "required"
+        }).validate();
+
+    expect(valinode.errorCount()).toBe(0)
 });
 
 test("Integer", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "integer"
         })
@@ -31,19 +38,19 @@ test("Integer", function () {
             test: "string value"
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("integer", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("integer", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: 12
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 
 test("String", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "string"
         })
@@ -51,18 +58,18 @@ test("String", function () {
             test: 12
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("string", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("string", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "string"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Array", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "array"
         })
@@ -70,36 +77,36 @@ test("Array", function () {
             test: 12
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("array", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("array", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: []
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Date", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "date"
         })
         .requests({
             test: "string value"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("date", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("date", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "2018-09-26"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Max:string", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "max:5"
         })
@@ -107,18 +114,18 @@ test("Max:string", function () {
             test: "bu bir denemedir."
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("max", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("max", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "bu bi"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Max:integer", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "max:5"
         })
@@ -126,18 +133,18 @@ test("Max:integer", function () {
             test: "6"
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("max", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("max", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: 5
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Max:array", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "max:2"
         })
@@ -145,18 +152,18 @@ test("Max:array", function () {
             test: [1, 2, 3]
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("max", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("max", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: [1, 2]
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Max:date", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "max:2018-09-26"
         })
@@ -164,19 +171,19 @@ test("Max:date", function () {
             test: "2018-09-27"
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("max", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("max", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "2018-09-26"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 
 test("Min:string", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "min:5"
         })
@@ -184,18 +191,18 @@ test("Min:string", function () {
             test: "bu"
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("min", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "bu bir denemedir."
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Min:integer", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "min:5"
         })
@@ -203,18 +210,18 @@ test("Min:integer", function () {
             test: "2"
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("min", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: 5
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Min:array", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "min:2"
         })
@@ -222,18 +229,18 @@ test("Min:array", function () {
             test: [1]
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("min", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: [1, 2]
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Min:date", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "min:2018-09-26"
         })
@@ -241,18 +248,18 @@ test("Min:date", function () {
             test: "2018-09-25"
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("min", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "2018-09-26"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("In:array", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "in:[1,2]"
         })
@@ -260,18 +267,18 @@ test("In:array", function () {
             test: [3]
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("in", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("in", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: [1]
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("In:integer", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "in:[1,2]"
         })
@@ -279,14 +286,14 @@ test("In:integer", function () {
             test: 3
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("in", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("in", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: 2
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("In:string", function () {
@@ -295,7 +302,7 @@ test("In:string", function () {
 });
 
 test("Bigger than:integer", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "bigger_than:test2"
         })
@@ -304,19 +311,19 @@ test("Bigger than:integer", function () {
             test2: 5
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: 5,
         test2: 4
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Bigger than:string", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "bigger_than:test2"
         })
@@ -324,19 +331,19 @@ test("Bigger than:string", function () {
             test: "a",
             test2: "b"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "b",
         test2: "a"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Bigger than:date", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "bigger_than:test2"
         })
@@ -344,19 +351,19 @@ test("Bigger than:date", function () {
             test: "2018-09-26",
             test2: "2018-09-27"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "2018-09-27",
         test2: "2018-09-26"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Smaller than:integer", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "smaller_than:test2"
         })
@@ -365,19 +372,19 @@ test("Smaller than:integer", function () {
             test2: 4
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: 4,
         test2: 5
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Smaller than:string", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "smaller_than:test2"
         })
@@ -385,19 +392,19 @@ test("Smaller than:string", function () {
             test: "b",
             test2: "a"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "a",
         test2: "b"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Smaller than:date", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "smaller_than:test2"
         })
@@ -405,37 +412,37 @@ test("Smaller than:date", function () {
             test: "2018-09-27",
             test2: "2018-09-26"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "2018-09-26",
         test2: "2018-09-27"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Between:integer", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "between:4,5"
         })
         .requests({
             test: "2"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("between", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("between", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "4"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Between:string", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "between:10,20"
         })
@@ -443,43 +450,43 @@ test("Between:string", function () {
             test: "bu bir de" /* 9 characters */
         }).validate();
 
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("between", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("between", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "bu bir deneme içeriktir.." /* 25 characters */
     }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("between", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("between", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "bu bir denemedir." /* 17 characters */
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Between:date", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "between:2018-09-27,2018-09-29"
         })
         .requests({
             test: "2018-09-25"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("between", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("between", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "2018-09-27"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Same", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "same:test2"
         })
@@ -487,19 +494,19 @@ test("Same", function () {
             test: "2018-09-25",
             test2: "2018-09-26"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("same", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("same", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: 12,
         test2: "12"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Hard Same", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "hard_same:test2"
         })
@@ -507,74 +514,74 @@ test("Hard Same", function () {
             test: "2018-09-25",
             test2: "2018-09-26"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("hard_same", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("hard_same", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: 12,
         test2: "12"
     }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("hard_same", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("hard_same", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: 12,
         test2: 12
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "12",
         test2: "12"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Phone", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "phone"
         })
         .requests({
             test: "2018-09-25"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("phone", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("phone", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "+442071838750"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
-    bubba = bubba.requests({
+    expect(valinode.errorCount()).toBe(0);
+    valinode = valinode.requests({
         test: "+905555555555"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 test("Email", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "email"
         })
         .requests({
             test: "test@test"
         }).validate();
-    expect(bubba.get("test").length).toBe(1);
-    expect(bubba.isFailedRule("email", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.get("test").length).toBe(1);
+    expect(valinode.isFailedRule("email", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "test@test.com"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 });
 
 
 test("Nullable:required", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .rules({
             test: "required"
         })
@@ -583,62 +590,94 @@ test("Nullable:required", function () {
         })
         .validate();
 
-    expect(bubba.get("test").length).toBe(1);
+    expect(valinode.get("test").length).toBe(1);
 
-    expect(bubba.isFailedRule("required", "test")).toBeInstanceOf(Object);
-    expect(bubba.get("test")).toBeInstanceOf(Array);
+    expect(valinode.isFailedRule("required", "test")).toBeInstanceOf(Object);
+    expect(valinode.get("test")).toBeInstanceOf(Array);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: "wwww"
     }).rules({
         test: "nullable|required"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: ""
     }).rules({
         test: "required|nullable"
     }).validate();
-    expect(bubba.errorCount()).toBe(0);
-    expect(bubba.errorCount("test")).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
+    expect(valinode.errorCount("test")).toBe(0);
 });
 
-test("Nullable:min", function () {
-    let bubba = new Bubba()
+test("Nullable:min:integer", function () {
+    let valinode = new Valinode()
         .requests({
             test: "5"
         }).rules({
             test: "min:6"
         }).validate();
 
-    expect(bubba.errorCount()).toBe(1);
-    expect(bubba.isFailedRule("min", "test")).toBeInstanceOf(Object);
+    expect(valinode.errorCount()).toBe(1);
+    expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: ""
     }).rules({
         test: "nullable|min:6"
     }).validate();
 
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
+});
+
+test("Nullable:min:array", function () {
+    let valinode = new Valinode()
+        .requests({
+            test: [1],
+        }).rules({
+            test: "array|min:2"
+        }).validate();
+    expect(valinode.errorCount()).toBe(1);
+    expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
+
+    valinode = valinode
+        .requests({
+            test: []
+        })
+        .rules({
+            test: "min:2"
+        }).validate();
+
+    expect(valinode.errorCount()).toBe(1);
+
+    valinode = valinode
+        .requests({
+            test: []
+        })
+        .rules({
+            test: "nullable|min:2"
+        }).validate();
+
+
+    expect(valinode.errorCount()).toBe(0)
 });
 
 test("Nullable:max", function () {
-    let bubba = new Bubba()
+    let valinode = new Valinode()
         .requests({
             test: "5"
         }).rules({
             test: "max:4"
         }).validate();
-    expect(bubba.errorCount()).toBe(1);
-    expect(bubba.isFailedRule("max", "test")).toBeInstanceOf(Object);
+    expect(valinode.errorCount()).toBe(1);
+    expect(valinode.isFailedRule("max", "test")).toBeInstanceOf(Object);
 
-    bubba = bubba.requests({
+    valinode = valinode.requests({
         test: ""
     }).rules({
         test: "nullable|max:6"
     }).validate();
 
-    expect(bubba.errorCount()).toBe(0);
+    expect(valinode.errorCount()).toBe(0);
 })
