@@ -12,12 +12,14 @@ test("Required", function () {
 
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
     expect(valinode.isFailedRule("required", "test")).toBeInstanceOf(Object);
 
     valinode = valinode.requests({
         test: "12"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 
     valinode = valinode.requests({
             test: "tes"
@@ -26,7 +28,8 @@ test("Required", function () {
             test: "required"
         }).validate();
 
-    expect(valinode.errorCount()).toBe(0)
+    expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Integer", function () {
@@ -39,6 +42,7 @@ test("Integer", function () {
         }).validate();
 
     expect(valinode.get("test").length).toBe(1);
+    expect(valinode.fails()).toBe(true);
     expect(valinode.isFailedRule("integer", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
 
@@ -46,6 +50,7 @@ test("Integer", function () {
         test: 12
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 
@@ -61,11 +66,13 @@ test("String", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("string", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "string"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Array", function () {
@@ -80,11 +87,13 @@ test("Array", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("array", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: []
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Date", function () {
@@ -98,11 +107,13 @@ test("Date", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("date", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "2018-09-26"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Max:string", function () {
@@ -117,11 +128,13 @@ test("Max:string", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("max", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "bu bi"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Max:integer", function () {
@@ -136,11 +149,13 @@ test("Max:integer", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("max", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: 5
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Max:array", function () {
@@ -155,11 +170,13 @@ test("Max:array", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("max", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: [1, 2]
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Max:date", function () {
@@ -174,11 +191,13 @@ test("Max:date", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("max", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "2018-09-26"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 
@@ -194,11 +213,13 @@ test("Min:string", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "bu bir denemedir."
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Min:integer", function () {
@@ -213,11 +234,13 @@ test("Min:integer", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: 5
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Min:array", function () {
@@ -232,11 +255,13 @@ test("Min:array", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: [1, 2]
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Min:date", function () {
@@ -251,11 +276,13 @@ test("Min:date", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "2018-09-26"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("In:array", function () {
@@ -270,11 +297,13 @@ test("In:array", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("in", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: [1]
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("In:integer", function () {
@@ -289,11 +318,13 @@ test("In:integer", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("in", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: 2
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("In:string", function () {
@@ -314,12 +345,14 @@ test("Bigger than:integer", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: 5,
         test2: 4
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Bigger than:string", function () {
@@ -334,12 +367,14 @@ test("Bigger than:string", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "b",
         test2: "a"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Bigger than:date", function () {
@@ -354,12 +389,14 @@ test("Bigger than:date", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("bigger_than", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "2018-09-27",
         test2: "2018-09-26"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Smaller than:integer", function () {
@@ -375,12 +412,14 @@ test("Smaller than:integer", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: 4,
         test2: 5
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Smaller than:string", function () {
@@ -395,12 +434,14 @@ test("Smaller than:string", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "a",
         test2: "b"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Smaller than:date", function () {
@@ -415,12 +456,14 @@ test("Smaller than:date", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("smaller_than", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "2018-09-26",
         test2: "2018-09-27"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Between:integer", function () {
@@ -434,11 +477,13 @@ test("Between:integer", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("between", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "4"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Between:string", function () {
@@ -453,6 +498,7 @@ test("Between:string", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("between", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "bu bir deneme içeriktir.." /* 25 characters */
@@ -460,11 +506,13 @@ test("Between:string", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("between", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "bu bir denemedir." /* 17 characters */
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Between:date", function () {
@@ -478,11 +526,13 @@ test("Between:date", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("between", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "2018-09-27"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Same", function () {
@@ -497,12 +547,14 @@ test("Same", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("same", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: 12,
         test2: "12"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Hard Same", function () {
@@ -517,6 +569,7 @@ test("Hard Same", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("hard_same", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: 12,
@@ -525,18 +578,21 @@ test("Hard Same", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("hard_same", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: 12,
         test2: 12
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 
     valinode = valinode.requests({
         test: "12",
         test2: "12"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Phone", function () {
@@ -550,15 +606,18 @@ test("Phone", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("phone", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "+442071838750"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
     valinode = valinode.requests({
         test: "+905555555555"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Email", function () {
@@ -572,11 +631,13 @@ test("Email", function () {
     expect(valinode.get("test").length).toBe(1);
     expect(valinode.isFailedRule("email", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "test@test.com"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 
@@ -594,6 +655,7 @@ test("Nullable:required", function () {
 
     expect(valinode.isFailedRule("required", "test")).toBeInstanceOf(Object);
     expect(valinode.get("test")).toBeInstanceOf(Array);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: "wwww"
@@ -601,6 +663,7 @@ test("Nullable:required", function () {
         test: "nullable|required"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 
     valinode = valinode.requests({
         test: ""
@@ -608,6 +671,7 @@ test("Nullable:required", function () {
         test: "required|nullable"
     }).validate();
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
     expect(valinode.errorCount("test")).toBe(0);
 });
 
@@ -621,6 +685,7 @@ test("Nullable:min:integer", function () {
 
     expect(valinode.errorCount()).toBe(1);
     expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: ""
@@ -629,6 +694,7 @@ test("Nullable:min:integer", function () {
     }).validate();
 
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 });
 
 test("Nullable:min:array", function () {
@@ -640,6 +706,7 @@ test("Nullable:min:array", function () {
         }).validate();
     expect(valinode.errorCount()).toBe(1);
     expect(valinode.isFailedRule("min", "test")).toBeInstanceOf(Object);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode
         .requests({
@@ -672,6 +739,7 @@ test("Nullable:max", function () {
         }).validate();
     expect(valinode.errorCount()).toBe(1);
     expect(valinode.isFailedRule("max", "test")).toBeInstanceOf(Object);
+    expect(valinode.fails()).toBe(true);
 
     valinode = valinode.requests({
         test: ""
@@ -680,4 +748,5 @@ test("Nullable:max", function () {
     }).validate();
 
     expect(valinode.errorCount()).toBe(0);
+    expect(valinode.fails()).toBe(false);
 })

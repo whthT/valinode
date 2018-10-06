@@ -103,15 +103,17 @@ export default class Valinode {
                             if (typeof this[_v._fn] != "undefined") {
                                 let exception = this[_v._fn](requestObj, _v);
                                 if (exception) {
-                                    if (!this._isFailed) {
-                                        this._isFailed = true;
-                                    }
+                                    this.setIsFailed(true);
                                     this._errorCount++;
                                     this.$ExceptionContainer.errors[requestObj.property].push(exception);
+                                } else {
+                                    this.setIsFailed(false);
                                 }
                             } else {
                                 console.warn(_v._fn + " is not a valid validation rule!");
                             }
+                        } else {
+                            this.setIsFailed(false);
                         }
                     });
                 }
@@ -438,6 +440,12 @@ export default class Valinode {
             return this.first(property) ? true : false;
         }
         return this._isFailed;
+    }
+
+    setIsFailed(bool) {
+        if (this._isFailed != bool) {
+            this._isFailed = bool;
+        }
     }
 
     fails() {
