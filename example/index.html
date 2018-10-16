@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,41 +9,44 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
+
 <body>
-    
+
     <input type="date" name="tarih1" placeholder="Geliş tarihi" />
     <input type="date" name="tarih2" placeholder="Dönüş tarihi" />
 
-    <script src="../dist/index.js"></script>
-<script>
-$(function() {
-   let  tarih1 = $("input[name=tarih1]"),
-        tarih2 = $("input[name=tarih2]");
-   
-   $valinode = new Valinode();
-    
-   $.validate = function() {
-        let validate = $valinode.requests({
-            tarih1: tarih1.val(),
-            tarih2: tarih2.val()
-        }).validate();
-        
-        console.log(validate.all());
-    };
+    <script src="../dist/valinode.bundle.js"></script>
+    <script>
+        $(function() {
+            let tarih1 = $("input[name=tarih1]"),
+                tarih2 = $("input[name=tarih2]");
 
-    $valinode.rules({
-        tarih1: "required|integer|max:2018-09-27",
-        tarih2: "required|date|bigger_than:tarih1|between:2018-09-27,2018-09-29"
-    })
-    .attributes({
-        tarih1: "Geliş tarihi",
-        tarih2: "Dönüş tarihi"
-    });
+            valinode = new Valinode();
 
-    tarih1.on("change",$.validate);
-    tarih2.on("change",$.validate);
+            $.validate = function() {
+                let validate = valinode.requests({
+                    tarih1: tarih1.val(),
+                    tarih2: tarih2.val()
+                }).validate();
 
-});
-</script>
+                console.log(validate.all());
+            };
+
+            valinode.rules({
+                    tarih1: "required|integer|max:2018-09-27",
+                    tarih2: "required|date|bigger_than:tarih1|between:2018-09-27,2018-09-29"
+                })
+                .attributes({
+                    tarih1: "Geliş tarihi",
+                    tarih2: "Dönüş tarihi"
+                });
+
+            tarih1.on("change", $.validate);
+            tarih2.on("change", $.validate);
+
+        });
+
+    </script>
 </body>
+
 </html>
