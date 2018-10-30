@@ -200,11 +200,11 @@ export default class Valinode {
         }
 
         in (request, rule) {
-            if ( //TODO: Date formatına göre iki tarih arasında in kuralı geçerli olması için çalışılacaktır.
+            if (
                 (
                     request.typeOf == "array" ?
                     request.value : [request.typeOf == "numeric" ?
-                parseInt(request.value) : request.value]).diff(JSON.parse(rule.value)).length
+            parseInt(request.value) : request.value]).diff(String(rule.value).replace(/\[|\]/gm, '').split(',').map(v => parseInt(v))).length
             ) {
                 return this.createNewExceptionMessage(request, rule);
             }

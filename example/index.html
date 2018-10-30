@@ -15,18 +15,28 @@
     <input type="date" name="tarih1" placeholder="Geliş tarihi" />
     <input type="date" name="tarih2" placeholder="Dönüş tarihi" />
 
+    <select name="test">
+        <option value="1">Opt 1</option>
+        <option value="2">Opt 2</option>
+        <option value="3">Opt 3</option>
+        <option value="4">Opt 4</option>
+        <option value="5">Opt 5</option>
+    </select>
+
     <script src="../dist/valinode.bundle.js"></script>
     <script>
         $(function() {
             let tarih1 = $("input[name=tarih1]"),
-                tarih2 = $("input[name=tarih2]");
+                tarih2 = $("input[name=tarih2]"),
+                test = $("select[name=test]");
 
             valinode = new Valinode();
 
             $.validate = function() {
                 let validate = valinode.requests({
                     tarih1: tarih1.val(),
-                    tarih2: tarih2.val()
+                    tarih2: tarih2.val(),
+                    test: test.val()
                 }).validate();
 
                 console.log(validate.all());
@@ -34,15 +44,18 @@
 
             valinode.rules({
                     tarih1: "required|integer|max:2018-09-27",
-                    tarih2: "required|date|bigger_than:tarih1|between:2018-09-27,2018-09-29"
+                    tarih2: "required|date|bigger_than:tarih1|between:2018-09-27,2018-09-29",
+                    test: "in:1,2,3,4"
                 })
                 .attributes({
                     tarih1: "Geliş tarihi",
-                    tarih2: "Dönüş tarihi"
+                    tarih2: "Dönüş tarihi",
+                    test: "Test"
                 });
 
             tarih1.on("change", $.validate);
             tarih2.on("change", $.validate);
+            test.on("change", $.validate);
 
         });
 
