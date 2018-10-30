@@ -102,9 +102,11 @@ export default class Valinode {
 
     requests(args, append = false) {
         if (args instanceof Object) {
-            this.$requests = append ? { ...this.$requests,
-                ...args
-            } : args;
+            if (append) {
+                this.$requests = Object.assign(this.$requests, args);
+            } else {
+                this.$requests = args
+            }
             this.clear()
         }
         return this;
@@ -112,9 +114,11 @@ export default class Valinode {
 
     messages(args, append) {
         if (args instanceof Object) {
-            this.$messages = append ? { ...this.$messages,
-                ...args
-            } : args;
+            if (append) {
+                this.$messages = Object.assign(this.$messages, args);
+            } else {
+                this.$messages = args
+            }
             this.clear()
         }
         return this;
@@ -122,9 +126,11 @@ export default class Valinode {
 
     attributes(args, append) {
         if (args instanceof Object) {
-            this.$attributes = append ? { ...this.$attributes,
-                ...args
-            } : args;
+            if (append) {
+                this.$attributes = Object.assign(this.$attributes, args);
+            } else {
+                this.$attributes = args
+            }
             this.clear()
         }
         return this;
@@ -132,18 +138,18 @@ export default class Valinode {
 
     rules(args, append) {
         if (args instanceof Object) {
-            this.$rules = append ? { ...this.$rules,
-                ...args
-            } : args;
+            if (append) {
+                this.$rules = Object.assign(this.$rules, args);
+            } else {
+                this.$rules = args
+            }
             this.clear()
         }
         return this;
     }
 
     translate(args) {
-        this.$translate = { ...this.$translate,
-            ...args
-        };
+        this.$translate = Object.assign(this.$translate, args);
         return this;
     }
 
