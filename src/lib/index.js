@@ -216,6 +216,10 @@ export default class Valinode {
             }
         }
 
+    valinode_in(request, rule) {
+        return this.in(request, rule);
+    }
+
     bigger_than(request, rule) {
         if (typeof this.$requests[rule.value] != "undefined") {
             let bigger_who = this.$requests[rule.value];
