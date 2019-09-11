@@ -13,7 +13,7 @@ interface Regex {
     phone: any
 }
 declare class Valinode {
-    constructor(args: IProps);
+    constructor(args?: IProps);
 
     isDebug: boolean;
     locale: object;
