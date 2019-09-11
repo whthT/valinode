@@ -9,11 +9,14 @@ Array.prototype.diff = function (a) {
 import trTRLocale from "./locale/tr-TR";
 
 export class Valinode {
-    constructor(args = {}) {
+    constructor({
+        debug = false,
+        locale = null
+    } = {}) {
 
-        this.isDebug = args.debug || false;
+        this.isDebug = debug;
 
-        this.locale = args.locale || trTRLocale;
+        this.locale = locale || trTRLocale;
 
         /* OBJECTS */
         this.$ExceptionContainer = {
