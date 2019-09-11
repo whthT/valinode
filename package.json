@@ -1,6 +1,6 @@
 {
     "name": "valinode",
-    "version": "1.0.14",
+    "version": "1.0.15",
     "description": "A package for javascript form validation.",
     "main": "./src/index.js",
     "scripts": {
