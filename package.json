@@ -5,9 +5,8 @@
     "main": "./src/index.js",
     "scripts": {
         "test": "jest",
-        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=webpack.config.js --mode=development",
-        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=webpack.config.js --mode=production",
-        "watch": "npm run development -- --watch"
+        "dev": "cross-env NODE_ENV=development parallel-webpack --config=webpack.config.js --watch",
+        "build": "cross-env NODE_ENV=production parallel-webpack --config=webpack.config.js --mode=production"
     },
     "repository": {
         "type": "git",
@@ -26,33 +25,46 @@
         "url": "https://github.com/whthT/valinode/issues"
     },
     "devDependencies": {
-        "@babel/cli": "^7.1.2",
-        "@babel/core": "^7.1.2",
-        "@babel/plugin-proposal-object-rest-spread": "^7.0.0-beta.41",
-        "@babel/preset-env": "^7.1.0",
-        "babel-loader": "^8.0.4",
-        "jest": "^23.6.0",
-        "webpack": "^4.25.1",
-        "webpack-cli": "^3.1.2"
+        "@babel/core": "^7.6.0",
+        "@babel/preset-env": "^7.6.0",
+        "babel-loader": "^8.0.6",
+        "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+        "cross-env": "^5.2.1",
+        "jest": "^24.9.0",
+        "jest-css-modules": "^2.1.0",
+        "parallel-webpack": "^2.4.0",
+        "webpack": "^4.39.3"
+    },
+    "dependencies": {
+        "is-nan": "^1.2.1"
+    },
+    "jest": {
+        "verbose": true,
+        "transform": {
+            "^.+\\.js$": "babel-jest",
+            "^.+\\.(css|scss|less)$": "jest-css-modules"
+        },
+        "globals": {
+            "NODE_ENV": "test"
+        },
+        "moduleFileExtensions": [
+            "js"
+        ],
+        "moduleDirectories": [
+            "node_modules",
+            "./src"
+        ]
     },
     "babel": {
         "presets": [
-            [
-                "@babel/preset-env",
-                {
-                    "modules": "commonjs",
-                    "targets": {
-                        "node": "current"
-                    }
-                }
-            ]
+            "@babel/preset-env"
         ],
-        "plugins": [
-            "@babel/plugin-proposal-object-rest-spread"
-        ]
-    },
-    "dependencies": {
-        "babel-core": "^7.0.0-0",
-        "is-nan": "^1.2.1"
+        "env": {
+            "production": {
+                "plugins": [
+                    "transform-es2015-modules-commonjs"
+                ]
+            }
+        }
     }
 }
