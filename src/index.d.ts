@@ -33,10 +33,10 @@ declare class Valinode {
     failedRules: Array<any>;
 
     beginValidate(): Promise;
-    requests(args: object, append: boolean): Valinode;
-    messages(args: object, append: boolean): Valinode;
-    attributes(args: object, append: boolean): Valinode;
-    rules(args: object, append: boolean): Valinode;
+    requests(args: object, append?: boolean): Valinode;
+    messages(args: object, append?: boolean): Valinode;
+    attributes(args: object, append?: boolean): Valinode;
+    rules(args: object, append?: boolean): Valinode;
     translate(args): Valinode
 
     required(request, rule): string
@@ -59,16 +59,16 @@ declare class Valinode {
     isRuleExists(request, rule): string
     isNullable(request, rule): string
 
-    get(property = false): Array<any>
-    limit(property = false, limit = false): Array<any>
-    first(property = false): string|null
+    get(property? = false): Array<any>
+    limit(property? = false, limit? = false): Array<any>
+    first(property? = false): string|null
     all(): string|null
     errors(): object
-    isFailed(property = false): boolean
+    isFailed(property? = false): boolean
     fails(): boolean
     isValidated(): boolean
-    errorCount(property = null): boolean
+    errorCount(property? = null): boolean
     clear(): Valinode
-    isFailedRule(rule, property): string|null
+    isFailedRule(rule?: string, property?: string): string|null
     validate(): Valinode
 }
