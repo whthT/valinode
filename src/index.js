@@ -33,7 +33,7 @@ const trTRLocale = {
     phone: ":attribute alanı geçerli bir telefon numarası olmalıdır.",
     date: ":attribute alanı geçerli bir tarih olmalıdır."
 }
-export class Valinode {
+module.exports = class Valinode {
     constructor({
         debug = false,
         locale = null
@@ -501,5 +501,3 @@ export class Valinode {
     }
 
 };
-
-export default Valinode
