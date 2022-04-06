@@ -1,0 +1,27 @@
+{
+  "and": "and",
+  "required": ":attribute cannot be null.",
+  "integer": ":attribute must be number.",
+  "string": ":attribute must be string.",
+  "array": ":attribute must be array.",
+  "max": {
+    "numeric": "The value of the :attribute field can be up to :rule_value.",
+    "string": "The :attribute field can contain up to :rule_value characters. (:length characters)",
+    "array": "You can select up to :rule_value in the :attribute field.",
+    "date": "The date range of the :attribute field can be a maximum of :rule_value."
+  },
+  "min": {
+    "numeric": "The value of the :attribute field can be at least :rule_value.",
+    "string": "The :attribute field can contain at least :rule_value characters.",
+    "array": "You must select at least :rule_value in the :attribute field.",
+    "date": "The date range of the :attribute field can be at least :rule_value."
+  },
+  "in": "The value of the :attribute field is invalid.",
+  "bigger_than": "The :attribute field must be greater than the :other field.",
+  "between": "The :attribute field can be between :other.",
+  "same": "The :attribute field must be the same as the :other field.",
+  "hard_same": "The :attribute field must be the same as the :other field.",
+  "email": "The :attribute field must be a valid email address.",
+  "phone": "The :attribute field must be a valid phone number.",
+  "date": "The :attribute field must be a valid date."
+}
